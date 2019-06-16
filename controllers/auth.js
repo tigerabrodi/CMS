@@ -34,10 +34,6 @@ exports.postLogin = (req, res, next) => {
             username: username
         })
         .then(user => {
-            if (!user) {
-                req.flash("error", "Invalid email or password.");
-                return res.redirect("/login");
-            }
             bcrypt
                 .compare(password, user.password)
                 .then(doMatch => {
@@ -60,8 +56,13 @@ exports.postLogin = (req, res, next) => {
                     res.redirect("/login");
                 })
         })
-        .catch(err => console.log);
+        .catch(err => {
+            console.log(err);
+            req.flash("error", "Invalid email or password.");
+            return res.redirect("/login");
+        });
 }
+
 
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
@@ -78,12 +79,11 @@ exports.postSignup = (req, res, next) => {
     User.findOne({
             username: username
         })
-        .then(userDoc => {
-            if (userDoc) {
-                req.flash("error", "email exists already, please pick a different one.");
-                return res.redirect("/signup"); 
-                console.log(userDoc);
-            }
+        .then(() => {
+            req.flash("error", "email exists already, please pick a different one.");
+            return res.redirect("/signup")
+        })
+        .catch(() => {
             return bcrypt
                 .hash(password, 12)
                 .then(hashedPassword => {
