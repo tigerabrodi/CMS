@@ -1,0 +1,25 @@
+<% if (!isAuthenticated) { %>
+
+<ul>
+    <li><a href="/">home</a></li>
+    <li><a href="/signup">signup</a></li>
+    <li><a href="/login">login</a></li>
+</ul>
+
+
+
+<% } else { %>
+
+<ul>
+    <li><a href="/posts">posts</a> </li>
+    <li><a href="/myposts">myposts</a> </li>
+    <li><a href="/createpost">createpost</a></li>
+    <li>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Logout</button>
+        </form>
+    </li>
+</ul>
+
+<% } %>

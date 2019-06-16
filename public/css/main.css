@@ -1,0 +1,26 @@
+ul {
+    text-align: center;
+}
+
+ul li {
+    padding: 3% 7%;
+    display: inline-block;
+    list-style: none;
+}
+
+ul li a {
+    text-decoration: none;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.user-message-error {
+    border-color: red;
+    background: rgb(255, 176, 176);
+    padding: 0.5rem;
+    color: red;
+    width: 90%;
+    margin: auto;
+    border-radius: 3px;
+    text-align: center;
+}
