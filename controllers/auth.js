@@ -2,25 +2,31 @@ const path = require('path');
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
-exports.getLoginPage = (req, res) => {
-    res.render("blog/login", {
-        pageTitle: "login",
-        path: "/login",
-        errorMessage: message
-    });
-}
 
-exports.getsignUpPage = (req, res) => {
+
+function getErrorMessage(req) {
     let message = req.flash("error");
     if (message.length > 0) {
         message = message[0];
     } else {
         message = null;
     }
+    return message;
+}
+
+exports.getLoginPage = (req, res) => {
+    res.render("blog/login", {
+        pageTitle: "login",
+        path: "/login",
+        errorMessage: getErrorMessage(req)
+    });
+}
+
+exports.getsignUpPage = (req, res) => {
     res.render("blog/signup", {
         pageTitle: "signup",
         path: "/signup",
-        errorMessage: message
+        errorMessage: getErrorMessage(req)
     });
 }
 
@@ -30,9 +36,7 @@ exports.postLogin = (req, res, next) => {
         username,
         password
     } = req.body;
-    User.findOne({
-            username: username
-        })
+    User.findOne({username})
         .then(user => {
             bcrypt
                 .compare(password, user.password)
@@ -76,9 +80,7 @@ exports.postSignup = (req, res, next) => {
         username,
         password
     } = req.body;
-    User.findOne({
-            username: username
-        })
+    User.findOne({username})
         .then(() => {
             req.flash("error", "email exists already, please pick a different one.");
             return res.redirect("/signup")
