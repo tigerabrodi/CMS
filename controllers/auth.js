@@ -52,11 +52,11 @@ exports.postLogin = (req, res, next) => {
                             })
                         });
                     }
-                    req.flash("error", "invalid email or password.");
-                    res.redirect("/login");
+
                 })
                 .catch(err => {
                     console.log(err);
+                    req.flash("error", "invalid email or password.");
                     res.redirect("/login");
                 })
         })
