@@ -10,7 +10,7 @@ const isAuth = require("../middleware/is-auth");
 
 
 
-router.get("/posts", isAuth, adminController.getPostsPage);
+router.get("/", isAuth, adminController.getPostsPage);
 
 router.get("/myposts", isAuth, adminController.getMyPostsPage);
 

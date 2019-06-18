@@ -46,10 +46,7 @@ exports.postLogin = (req, res, next) => {
                         req.session.user = user;
                         return req.session.save(err => {
                             console.log(err);
-                            res.render("admin/myposts", {
-                                path: "myposts",
-                                pageTitle: "myposts"
-                            })
+                            res.redirect("/");
                         });
                     }
 
@@ -81,9 +78,13 @@ exports.postSignup = (req, res, next) => {
         password
     } = req.body;
     User.findOne({username})
-        .then(() => {
-            req.flash("error", "email exists already, please pick a different one.");
-            return res.redirect("/signup")
+        .then(user => {
+       if (user === null) {
+        throw "";
+       } else {
+              req.flash("error", "email exists already, please pick a different one.");
+                return res.redirect("/signup")
+       }
         })
         .catch(() => {
             return bcrypt

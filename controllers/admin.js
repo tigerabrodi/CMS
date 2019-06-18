@@ -21,7 +21,7 @@ exports.getCreatepostPage = (req, res) => {
 
 exports.getPostsPage = (req, res) => {
     res.render("admin/posts", {
-        path: "/posts",
+        path: "/",
         pageTitle: "posts",
         isAuthenticated: req.session.isLoggedIn
     });
