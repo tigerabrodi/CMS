@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
 
-
 function getErrorMessage(req) {
     let message = req.flash("error");
     if (message.length > 0) {
@@ -14,6 +13,7 @@ function getErrorMessage(req) {
     return message;
 }
 
+
 exports.getLoginPage = (req, res) => {
     res.render("blog/login", {
         pageTitle: "login",
@@ -21,6 +21,7 @@ exports.getLoginPage = (req, res) => {
         errorMessage: getErrorMessage(req)
     });
 }
+
 
 exports.getsignUpPage = (req, res) => {
     res.render("blog/signup", {
@@ -31,76 +32,81 @@ exports.getsignUpPage = (req, res) => {
 }
 
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
     const {
         username,
         password
     } = req.body;
-    User.findOne({username})
-        .then(user => {
-            bcrypt
-                .compare(password, user.password)
-                .then(doMatch => {
-                    if (doMatch) {
-                        req.session.isLoggedIn = true;
-                        req.session.user = user;
-                        return req.session.save(err => {
-                            console.log(err);
-                            res.redirect("/");
-                        });
-                    }
 
-                })
-                .catch(err => {
-                    console.log(err);
-                    req.flash("error", "invalid email or password.");
-                    res.redirect("/login");
-                })
+    try {
+        const user = await User.findOne({
+            username
         })
-        .catch(err => {
-            console.log(err);
-            req.flash("error", "Invalid email or password.");
-            return res.redirect("/login");
+        if (!user) {
+            req.flash("error", "Invalid Email or Password.");
+            res.redirect("/login");
+        }
+        const correctCredentials = await bcrypt.compare(password, user.password)
+
+        if (!correctCredentials) {
+            req.flash("error", "Invalid Email or Password.");
+            res.redirect("/login");
+        }
+
+
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        const result = await req.session.save(err => {
+            if (err) throw err;
+            res.redirect("/");
         });
+
+
+    } catch (err) {
+        console.log(err);
+        return req.flash("error", "Invalid Email or Password.");
+        res.redirect("/login");
+    }
 }
 
 
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
-        console.log(err);
+        if (err) throw err;
         res.redirect("/");
     })
 }
+
 
 exports.postSignup = (req, res, next) => {
     const {
         username,
         password
     } = req.body;
-    User.findOne({username})
-        .then(user => {
-       if (user === null) {
-        throw "";
-       } else {
-              req.flash("error", "email exists already, please pick a different one.");
-                return res.redirect("/signup")
-       }
-        })
-        .catch(() => {
-            return bcrypt
-                .hash(password, 12)
-                .then(hashedPassword => {
-                    const user = new User({
-                        username: username,
-                        password: hashedPassword
-                    });
-                    return user.save();
-                })
-                .then(result => {
-                    res.redirect("/login");
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        })
-}
+
+    User.findOne({
+        username
+    }, (error, user) => {
+        if (error) return next(error);
+        if (user) {
+            req.flash("error", "Email exists already, please pick a different one.");
+            return res.redirect("/signup");
+        }
+
+        bcrypt
+            .hash(password, 12)
+            .then(hashedPassword => {
+                const user = new User({
+                    username: username,
+                    password: hashedPassword
+                });
+                return user.save();
+            })
+            .then(result => {
+                res.redirect("/login");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    });
+};

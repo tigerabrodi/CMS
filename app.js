@@ -20,11 +20,13 @@ const store = new MongoDBStore({
     collection: "sessions"
 });
 
+
 const csrfProtection = csrf();
 
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
 
 const adminRoutes = require("./routes/admin");
 const blogRoutes = require("./routes/blog");
@@ -34,6 +36,7 @@ const authRoutes = require("./routes/auth");
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -49,10 +52,12 @@ app.use(
         saveUninitialized: false,
         
     })
-)
+);
+
 
 app.use(flash());
 app.use(csrfProtection);
+
 
 app.use((req, res, next) => {
     if (!req.session.user) {
@@ -67,13 +72,15 @@ app.use((req, res, next) => {
         next();
     })
     .catch(err => console.log(err));
-})
+});
+
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
     next();
 });
+
 
 app.use(adminRoutes);
 app.use(blogRoutes);
@@ -82,11 +89,14 @@ app.use(authRoutes);
 
 app.use(errorController.get404);
 
+
 mongoose.set('useCreateIndex', true);
+
 
 mongoose.connect(mongodb_uri, {
     useNewUrlParser: true
 });
+
 
 app.listen(3000, function () {
     console.log("listening to port 3000")
