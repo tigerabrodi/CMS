@@ -1,6 +1,5 @@
 const path = require('path');
 const bcrypt = require("bcryptjs");
-const User = require("../models/user");
 
 exports.getMyPostsPage = (req, res) => {
     res.render("admin/myposts", {
@@ -26,21 +25,3 @@ exports.getPostsPage = (req, res) => {
         isAuthenticated: req.session.isLoggedIn
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

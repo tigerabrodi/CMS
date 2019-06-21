@@ -7,4 +7,3 @@ exports.getHomePage = (req, res) => {
         pageTitle: "home",
     });
 }
-

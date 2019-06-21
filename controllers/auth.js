@@ -79,21 +79,40 @@ exports.postLogout = (req, res, next) => {
 
 
 exports.postSignup = (req, res, next) => {
+
     const {
         username,
         password
     } = req.body;
 
+    const user = new User({
+        username,
+        password
+    });
+
     User.findOne({
         username
-    }, (error, user) => {
-        if (error) return next(error);
-        if (user) {
+    }, (err, userExists) => {
+        if (err) return next(err);
+        if (userExists) {
             req.flash("error", "Email exists already, please pick a different one.");
+
             return res.redirect("/signup");
         }
 
-        bcrypt
+        user.save(error => {
+            if (error) return next(error);
+            res.redirect("/login");
+        });
+    });
+};
+
+
+
+
+/*      Eh, old hashing way before pre save hook :p  
+
+bcrypt
             .hash(password, 12)
             .then(hashedPassword => {
                 const user = new User({
@@ -108,5 +127,4 @@ exports.postSignup = (req, res, next) => {
             .catch(err => {
                 console.log(err);
             })
-    });
-};
+     */
