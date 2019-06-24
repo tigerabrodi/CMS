@@ -4,16 +4,14 @@ const bcrypt = require("bcryptjs");
 exports.getMyPostsPage = (req, res) => {
     res.render("admin/myposts", {
         path: "/myposts",
-        pageTitle: "myposts",
-        isAuthenticated: req.session.isLoggedIn
+        pageTitle: "My Posts",
     })
 }
 
 exports.getCreatepostPage = (req, res) => {
     res.render("admin/createpost", {
         path: "/createpost",
-        pageTitle: "createpost",
-        isAuthenticated: req.session.isLoggedIn
+        pageTitle: "Create",
     });
 }
 
@@ -21,7 +19,6 @@ exports.getCreatepostPage = (req, res) => {
 exports.getPostsPage = (req, res) => {
     res.render("admin/posts", {
         path: "/",
-        pageTitle: "posts",
-        isAuthenticated: req.session.isLoggedIn
+        pageTitle: "Posts",
     });
 }

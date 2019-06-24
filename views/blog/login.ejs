@@ -8,10 +8,9 @@
     <div class="user-message-error"> <%= errorMessage %> </div>
     <% } %>
     <form action="/login" method="POST">
-        <label for="username">Username</label> <br> <input type="text" placeholder="enter username" name="username"
-            required>
+        <label for="email">Email</label> <br> <input type="text" placeholder="enter email" name="email" required>
         <br>
-        <label for="psw">password</label> <br> <input type="password" name="password" placeholder="enter password"
+        <label for="psw">Password</label> <br> <input type="password" name="password" placeholder="enter password"
             required>
         <br>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

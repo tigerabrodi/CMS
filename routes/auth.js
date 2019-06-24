@@ -13,7 +13,7 @@ router.post("/signup", authController.postSignup);
 
 router.post("/login", authController.postLogin);
 
-router.post("/logout", authController.postLogout);
+router.post("/logout", authController.getLogout);
 
 
 module.exports = router;

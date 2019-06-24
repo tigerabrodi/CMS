@@ -1,10 +1,13 @@
-require('dotenv').config({path: "node.env"});
+require('dotenv').config({
+    path: "node.env"
+});
 const path = require('path');
 const express = require('express');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const flash = require("connect-flash");
+const passport = require("passport");
 
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -15,6 +18,11 @@ const app = express();
 const csrf = require("csurf");
 const User = require("./models/user");
 
+// passport config
+require("./config/passport")(passport);
+
+
+// session store
 const store = new MongoDBStore({
     uri: mongodb_uri,
     collection: "sessions"
@@ -23,11 +31,11 @@ const store = new MongoDBStore({
 
 const csrfProtection = csrf();
 
-
+// ejs
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-
+//  require routes
 const adminRoutes = require("./routes/admin");
 const blogRoutes = require("./routes/blog");
 const authRoutes = require("./routes/auth");
@@ -40,7 +48,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// session 
 app.use(
     session({
         secret: process.env.SECRET,
@@ -50,38 +58,25 @@ app.use(
         store: store,
         resave: false,
         saveUninitialized: false,
-        
+
     })
 );
 
 
+// using pasport aswell as flash and csrf
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use(csrfProtection);
 
-
+// global variables
 app.use((req, res, next) => {
-    if (!req.session.user) {
-        return next();
-    }
-    User.findById(req.session.user._id)
-    .then(user => {
-        if (!user) {
-            return next();
-        }
-        req.user = user;
-        next();
-    })
-    .catch(err => console.log(err));
-});
-
-
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.user = req.user;
     res.locals.csrfToken = req.csrfToken();
     next();
 });
 
-
+// using the routes
 app.use(adminRoutes);
 app.use(blogRoutes);
 app.use(authRoutes);
@@ -92,12 +87,12 @@ app.use(errorController.get404);
 
 mongoose.set('useCreateIndex', true);
 
-
+// connection to mongodb
 mongoose.connect(mongodb_uri, {
     useNewUrlParser: true
 });
 
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("listening to port 3000")
 })
