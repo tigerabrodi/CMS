@@ -2,6 +2,39 @@ form {
     text-align: center;
 }
 
-form input {
-    width: 300px;
+input {
+    border-radius: 5px;
+    background-color: #8bd17d;
+    outline: 0;
+    display: block;
+    margin-left: 40%;
+    height: 15px;
+
+}
+
+input::placeholder {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: rgb(85, 82, 82);
+}
+
+button {
+    margin-top: 20px;
+    border-radius: 10px;
+    background: #8bd17d;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+form label {
+    color: lightgreen;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding-top: 40px;
+    padding-bottom: 10px;
+    display: flex;;
+    margin-left: 40%;
 }

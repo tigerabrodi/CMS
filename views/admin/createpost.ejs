@@ -4,6 +4,25 @@
 
 <body>
     <%- include("../includes/navigation.ejs", ) %>
-
+    <form class="create-post" action="/posts" method="POST">
+        <label for="title">Title</label>
+        <textarea name="title" placeholder="Name ? ..." cols="30" rows="10" required></textarea>
+        <br>
+        <label for="description">Description</label>
+        <textarea name="description" placeholder="Eh ? ..." cols="30" rows="10" required></textarea>
+        <br>
+        <label for="context">Context</label>
+        <textarea name="context" id="context" placeholder="What ? ..." id="" cols="30" rows="10" required></textarea>
+        <br>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit">
+            Create
+        </button>
+    </form>
 
     <%- include("../includes/footer.ejs") %>
+
+    <!-- 1. POST to /posts (from the form)
+    2. handle creation of the new post (in your express controller, that's attached to POST /posts)
+    3. retrieve new id
+    4. res.redirect to GET `/post/:id` -->

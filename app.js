@@ -16,7 +16,7 @@ const errorController = require('./controllers/error');
 const mongodb_uri = process.env.MONGODB_URI;
 const app = express();
 const csrf = require("csurf");
-const User = require("./models/user");
+const {User, Post} = require("./models/model");
 
 // passport config
 require("./config/passport")(passport);
@@ -86,6 +86,8 @@ app.use(errorController.get404);
 
 
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+
 
 // connection to mongodb
 mongoose.connect(mongodb_uri, {

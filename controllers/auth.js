@@ -1,7 +1,11 @@
 const path = require('path');
 const bcrypt = require("bcryptjs");
-const User = require("../models/user");
+const {
+    User,
+    Post
+} = require("../models/model");
 const passport = require("passport");
+const _ = require('lodash');
 
 
 function getErrorMessage(req) {
@@ -35,7 +39,7 @@ exports.getsignUpPage = (req, res) => {
 
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/posts',
         failureRedirect: '/login',
         failureFlash: true
     })(req, res, next);
@@ -51,13 +55,15 @@ exports.getLogout = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
 
     const {
+        name,
         email,
-        password
+        password,
     } = req.body;
 
     const user = new User({
+        name,
         email,
-        password
+        password,
     });
 
     User.findOne({
@@ -69,10 +75,10 @@ exports.postSignup = (req, res, next) => {
 
             return res.redirect("/signup");
         }
-                user.save()
-                .then(user => {
-                    res.redirect("/login");
-                })
-                .catch(err => console.log(err));
+        user.save()
+            .then(user => {
+                res.redirect("/login");
+            })
+            .catch(err => console.log(err));
     });
 };

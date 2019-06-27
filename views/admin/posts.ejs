@@ -4,6 +4,27 @@
 
 <body>
     <%- include("../includes/navigation.ejs", ) %>
+    <main>
+        <% if (posts.length > 0) { %>
 
+        <% for (let post of posts) { %>
+
+        <div class="grid">
+            <div>
+                <article class="post">
+                    <h1><%=post.title%></h1>
+                    <p><%=post.description%></p>
+                    <a href="/posts/<%=post._id%>">See Post</a>
+                <article>
+            </div>
+
+        </div>
+
+        <% } %>
+        <%  } else { %>
+
+        <h1 class="no-post">No Posts Found</h1>
+        <% } %>
+    </main>
 
     <%- include("../includes/footer.ejs") %>
