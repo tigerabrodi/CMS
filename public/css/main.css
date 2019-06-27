@@ -18,7 +18,8 @@ ul li a {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     background-color: #486b00;
-    border-radius: 5px
+    border-radius: 5px;
+    padding: 0 5px;
 }
 
 ul li a:hover {
@@ -43,6 +44,7 @@ ul li a:hover {
     color: #496810;
     margin-left: 100px;
     font-size: 13px;
+    padding: 0 3px;
 }
 
 #logout:hover {

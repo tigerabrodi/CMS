@@ -48,7 +48,7 @@ textarea::placeholder {
 }
 
 .grid div {
- margin: 25px;
+ margin: 0 25px;
 }
 
 .grid .post {
