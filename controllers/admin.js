@@ -18,14 +18,11 @@ function getErrorMessage(req) {
 }
 
 exports.getMyPostsPage = async (req, res) => {
-    const user = await User.findById(req.user._id)
-    const posts = await Post.findOne({author: user._id})
-    console.log(req.user._id);
-    console.log(posts);
+    const posts = await Post.find({author: req.user._id})
     res.render("admin/myposts", {
         path: "/myposts",
         pageTitle: "My Posts",
-        posts: posts
+        posts: posts,
     })
 }
 
@@ -85,15 +82,15 @@ exports.postCreatePost = async (req, res) => {
 exports.getPost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
-        const user = await User.findById(req.user._id);
-
+        const user = req.user;
         res.render("admin/post", {
             post: post,
             pageTitle: post.title,
             path: "/posts",
             user: user
         })
-
+        console.log(typeof(user._id));
+        console.log(typeof(post.author));
     } catch (err) {
         console.log(err);
     }
