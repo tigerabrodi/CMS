@@ -1,0 +1,27 @@
+<%- include("../includes/head.ejs") %>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <%- include("../includes/navigation.ejs", ) %>
+    <form class="edit-post" action="/posts/edit-post" method="POST">
+        <label for="title">Title</label>
+        <textarea name="title" placeholder="Name ? ..." id="" cols="30" rows="10" required></textarea>
+        <br>
+        <label for="description">Description</label>
+        <textarea name="description" placeholder="Eh ? ..." id="" cols="30" rows="10" required></textarea>
+        <br>
+        <label for="context">Context</label>
+        <textarea name="context" id="context" placeholder="What ? ..." id="" cols="30" rows="10" required></textarea>
+        <br>
+
+        <input type="hidden" value="<%= post._id %>" name="postId">
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <button type="submit">
+            Submit Post
+        </button>
+    </form>
+
+    <%- include("../includes/footer.ejs") %>

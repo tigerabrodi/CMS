@@ -1,0 +1,17 @@
+<%- include("../includes/head.ejs") %>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <%- include("../includes/navigation.ejs", ) %>
+    <main class="post-detail">
+        <h1><%= post.title %></h1>
+        <h2><%= post.description%></h2>
+        <p><%= post.context%></p>
+        <% if(String(post.author) === String(user._id)) { %>
+        <a href="/posts/edit-post/<%= post._id %>">Edit Post</a>
+        <a href="/posts/deleted-post/<%= post._id %>">Delete Post</a>
+        <% } %>
+    </main>
+
+    <%- include("../includes/footer.ejs") %>

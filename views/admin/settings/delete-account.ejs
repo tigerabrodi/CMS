@@ -1,0 +1,23 @@
+<%- include("../../includes/head.ejs") %>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <%- include("../../includes/navigation.ejs", ) %>
+    <% if (errorMessage) { %>
+    <div class="user-message-error"> <%= errorMessage %> </div>
+    <% } %>
+    <form class="delete-account" action="/settings/deleted-account/<%= user._id %>" method="POST">
+
+        <label for="email">Your Email</label>
+        <input type="text" name="confirmEmail" placeholder="Enter Your Email .." required>
+
+        <label for="email">Your Password</label>
+        <input type="password" name="confirmPassword" placeholder="Your Password .." required>
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit">
+            Delete Account
+        </button>
+    </form>
+    <%- include("../../includes/footer.ejs") %>

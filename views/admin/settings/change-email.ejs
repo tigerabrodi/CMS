@@ -1,0 +1,24 @@
+<%- include("../../includes/head.ejs") %>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <%- include("../../includes/navigation.ejs", ) %>
+    <% if (errorMessage) { %>
+        <div class="user-message-error"> <%= errorMessage %> </div>
+        <% } %>
+        
+    <form class="change-email" action="/settings/changed-email/<%= user._id %>" method="POST">
+
+        <label for="email">Your New Email</label>
+        <input type="text" name="newEmail" placeholder="Your New Email..." required>
+
+        <label for="email">Confirm Your New Email</label>
+        <input type="text" name="confirmNewEmail" placeholder="Confirm Your Email..." required>
+
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit">
+            Submit Email
+        </button>
+    </form>
+    <%- include("../../includes/footer.ejs") %>
