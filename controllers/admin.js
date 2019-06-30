@@ -84,14 +84,14 @@ exports.postCreatePost = async (req, res) => {
 
 exports.getPost = async (req, res) => {
     try {
-        const postId = req.params.postId;
-        const post = await Post.findById(postId)
+        const post = await Post.findById(req.params.postId);
+        const user = await User.findOne({_id: req.user});
 
         res.render("admin/post", {
             post: post,
             pageTitle: post.title,
             path: "/posts",
-            user: req.user
+            user: user
         })
 
     } catch (err) {
@@ -102,15 +102,19 @@ exports.getPost = async (req, res) => {
 
 exports.getEditPost = async (req, res) => {
     try {
-        const postId = req.params.postId;
-
-        const post = await Post.findById(postId)
+        // const user = await User.findById({
+        //     _id: req.user
+        // })
+        const post = await Post.findById(req.params.postId)
+        // if (post.author) {
         res.render("admin/edit-post", {
             pageTitle: "Edit Post",
             path: "/posts/edit-post",
             post: post
         })
         console.log(post);
+        // }
+
     } catch (err) {
         console.log(err);
     }
@@ -118,14 +122,13 @@ exports.getEditPost = async (req, res) => {
 
 exports.getDeletePost = async (req, res) => {
     try {
-        const postId = req.params.postId;
-
-        const post = await Post.findByIdAndRemove(postId)
-
+        const post = await Post.findByIdAndRemove(req.params.postId)
+        // const user = await User.findById({_id: req.user})
         res.render("admin/deleted-post", {
             pageTitle: "Successfully deleted",
             path: "/posts/deleted-post",
             post: post
+
         })
 
     } catch (err) {
@@ -207,32 +210,51 @@ exports.postChangedPassword = async (req, res) => {
         confirmNewPassword
     } = req.body;
 
+    const user = await User.findById(req.params.userId);
 
-        const userId = await req.params.userId;
-        const user = await User.findById(userId)
-
-        const oldHashedPassword = await bcrypt.hash(oldPassword, 10);
-        const newHashedPassword = await bcrypt.hash(newPassword, 10);
-
-        if (user.password === oldHashedPassword &&
-            newPassword === confirmNewPassword &&
-            oldHashedPassword !== newHashedPassword) {
-                console.log(user);
-            user.password = newHashedPassword;
-            user.save();
-            
-            res.render("admin/settings/appliedSettings/changed-password", {
-                pageTitle: "Succesfully Changed Password",
-                path: "/settings/changed-password",
-                user: user
-            })
+    bcrypt.compare(oldPassword, user.password, async (error, isMatch) => {
+        if (error) return console.log(error);
+        if (!isMatch) {
+            req.flash('error', 'Passwords do not match!');
+            return res.redirect('/settings/password');
         }
+        const newHashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = newHashedPassword;
+        user.save();
+        res.render("admin/settings/appliedSettings/changed-password", {
+            pageTitle: "Succesfully Changed Password",
+            path: "/settings/changed-password",
+            user: user
+        })
+    })
+}
 
-        
-        // console.log(user);
-        // console.log(error);
-        // req.flash("error", "Password do not match!");
-        // res.redirect("/settings/password");
+exports.getDeleteAccount = (req, res) => {
+    res.render("admin/settings/delete-account", {
+        pageTitle: "Delete Account",
+        path: "/settings/delete-account",
+        errorMessage: getErrorMessage(req)
+    })
+}
 
-    
+exports.postDeletedAccount = async (req, res) => {
+    const {
+        confirmEmail,
+        confirmPassword
+    } = req.body;
+    const user = await User.findById(req.params.userId);
+
+    bcrypt.compare(confirmPassword, user.password, async (error, isMatch) => {
+        if (error) return console.log(error);
+        if (!isMatch && confirmEmail !== user.email) {
+            req.flash("error", "Email or Password is Incorrect");
+            return res.redirect("/settings/delete-account")
+        }
+        user.remove();
+        res.render("admin/settings/appliedSettings/deleted-account", {
+            pageTitle: "Successfully Deleted",
+            path: "/settings/deleted-account",
+            user: user
+        })
+    })
 }

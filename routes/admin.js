@@ -26,7 +26,9 @@ router.get("/settings/email", adminController.getChangeEmail);
 
 router.get("/settings/password", adminController.getChangePassword);
 
-// router.get("/settings/delete/:userId", adminController.getDeleteUser);
+router.get("/settings/delete-account", adminController.getDeleteAccount);
+
+router.post("/settings/deleted-account/:userId", adminController.postDeletedAccount)
 
 router.post("/settings/changed-password/:userId", adminController.postChangedPassword);
 

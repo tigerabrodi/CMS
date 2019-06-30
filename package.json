@@ -1,8 +1,11 @@
 {
   "name": "blogcms",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CMS using back-end features of JS",
+  "main": "app.js",
+  "engines": {
+    "node": "10.15.1"
+  },
   "scripts": {
     "start": "node app.js"
   },

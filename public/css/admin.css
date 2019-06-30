@@ -195,6 +195,7 @@ textarea::placeholder {
     display: block;
     margin-left: 40%;
     height: 15px;
+    padding: 5px 50px;
 
 }
 
@@ -240,6 +241,7 @@ textarea::placeholder {
     display: block;
     margin-left: 40%;
     height: 15px;
+    padding: 5px 50px;
 
 }
 
@@ -265,4 +267,64 @@ textarea::placeholder {
 #context {
     height: 50px;
     padding-bottom: 70px;
+}
+
+
+.changed-password {
+    text-align: center;
+}
+
+.changed-password h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 150px;
+    font-size: 50px;
+    text-align: center;
+    color: #417c35;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+.delete-account {
+    text-align: center;
+}
+
+.delete-account input {
+    border-radius: 5px;
+    background-color: #8bd17d;
+    outline: 0;
+    display: block;
+    margin-left: 40%;
+    height: 15px;
+    padding: 5px 50px;
+
+}
+
+.delete-account input::placeholder {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: rgb(85, 82, 82);
+}
+
+.delete-account label {
+        color: lightgreen;
+        border-radius: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        display: flex;;
+        margin-left: 40%;
+}
+
+.deleted-account {
+    text-align: center;
+}
+
+.deleted-account h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 150px;
+    font-size: 50px;
+    text-align: center;
+    color: #417c35;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
