@@ -1,0 +1,8 @@
+::1 - - [30/Jun/2019:19:53:20 +0000] "GET / HTTP/1.1" 200 - "http://localhost:3000/posts" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:24 +0000] "GET /login HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:32 +0000] "POST /login HTTP/1.1" 302 46 "http://localhost:3000/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:33 +0000] "GET / HTTP/1.1" 200 - "http://localhost:3000/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:35 +0000] "GET /myposts HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:36 +0000] "GET /create HTTP/1.1" 200 - "http://localhost:3000/myposts" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:38 +0000] "GET /myposts HTTP/1.1" 304 - "http://localhost:3000/create" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:19:53:39 +0000] "GET / HTTP/1.1" 304 - "http://localhost:3000/myposts" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"

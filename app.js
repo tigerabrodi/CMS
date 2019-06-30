@@ -1,4 +1,3 @@
-// require('dotenv').config()
 const path = require('path');
 const fs = require("fs");
 const express = require('express');
@@ -104,10 +103,6 @@ app.use(errorController.get404);
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
-
-console.log(`${process.env.MONGO_PASSWORD}`);
-console.log(`${process.env.MONGO_USER}`);
-
 
 // connection to mongodb
 mongoose.connect(MONGODB_URI, {
