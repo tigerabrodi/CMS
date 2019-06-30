@@ -2,8 +2,9 @@ require('dotenv').config({
     path: "node.env"
 });
 const path = require('path');
+const port = process.env.PORT || 3000;
 const express = require('express');
-
+const debug = require("debug")("toto");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const flash = require("connect-flash");
@@ -16,7 +17,10 @@ const errorController = require('./controllers/error');
 const mongodb_uri = process.env.MONGODB_URI;
 const app = express();
 const csrf = require("csurf");
-const {User, Post} = require("./models/model");
+const {
+    User,
+    Post
+} = require("./models/model");
 
 // passport config
 require("./config/passport")(passport);
@@ -95,6 +99,6 @@ mongoose.connect(mongodb_uri, {
 });
 
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log("listening to port 3000")
+const server = app.listen(port, () => {
+    console.log("listening on port " + port);
 })

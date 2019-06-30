@@ -8,17 +8,29 @@ const isAuth = require("../middleware/is-auth");
 
 
 
-router.get("/posts", isAuth, adminController.getPostsPage);
+router.get("/", adminController.getPostsPage);
 
-router.get("/myposts", isAuth, adminController.getMyPostsPage);
+router.get("/myposts", adminController.getMyPostsPage);
 
-router.get("/create", isAuth, adminController.getCreatepostPage);
+router.get("/create", adminController.getCreatepostPage);
 
 router.get("/posts/:postId", adminController.getPost);
 
 router.get("/posts/edit-post/:postId", adminController.getEditPost);
 
 router.get("/posts/deleted-post/:postId", adminController.getDeletePost);
+
+router.get("/settings", adminController.getSettings);
+
+router.get("/settings/email", adminController.getChangeEmail);
+
+router.get("/settings/password", adminController.getChangePassword);
+
+// router.get("/settings/delete/:userId", adminController.getDeleteUser);
+
+router.post("/settings/changed-password/:userId", adminController.postChangedPassword);
+
+router.post("/settings/changed-email/:userId", adminController.postChangedEmail);
 
 router.post("/posts/edit-post", adminController.postEditPost);
 

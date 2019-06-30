@@ -2,13 +2,10 @@ body {
     background-color: #2e4600;
 }
 
-ul {
-    text-align: center;
-}
 
 ul li {
     padding: 3% 7%;
-    display: inline-block;
+    display: inline-flex;
     list-style: none;
 }
 

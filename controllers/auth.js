@@ -39,7 +39,7 @@ exports.getsignUpPage = (req, res) => {
 
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/posts',
+        successRedirect: '/',
         failureRedirect: '/login',
         failureFlash: true
     })(req, res, next);
@@ -72,7 +72,6 @@ exports.postSignup = (req, res, next) => {
         if (err) return next(err);
         if (userExists) {
             req.flash("error", "Email exists already, please pick a different one.");
-
             return res.redirect("/signup");
         }
         user.save()

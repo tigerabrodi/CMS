@@ -7,8 +7,20 @@ const {
     Post,
 } = require("../models/model");
 
+function getErrorMessage(req) {
+    let message = req.flash("error");
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+    return message;
+}
+
 exports.getMyPostsPage = async (req, res) => {
-    const posts = await Post.find({author: req.user})
+    const posts = await Post.find({
+        author: req.user
+    })
 
     res.render("admin/myposts", {
         path: "/myposts",
@@ -30,7 +42,7 @@ exports.getPostsPage = async (req, res) => {
         const posts = await Post.find({})
 
         res.render("admin/posts", {
-            path: "/posts",
+            path: "/",
             pageTitle: "Posts",
             posts: posts
         });
@@ -139,4 +151,88 @@ exports.postEditPost = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
+}
+
+exports.getSettings = (req, res) => {
+    res.render("admin/settings", {
+        pageTitle: "Settings",
+        path: "/settings",
+    })
+}
+
+exports.getChangeEmail = (req, res) => {
+    res.render("admin/settings/change-email", {
+        pageTitle: "Change Your Email",
+        path: "/settings/email",
+        errorMessage: getErrorMessage(req)
+    })
+}
+
+exports.postChangedEmail = (req, res) => {
+
+    const {
+        newEmail,
+        confirmNewEmail
+    } = req.body;
+    const userId = req.params.userId;
+    const user = User.findById(userId)
+
+    if (newEmail === confirmNewEmail) {
+        user.email = newEmail;
+        res.render("admin/settings/appliedSettings/changed-email", {
+            pageTitle: "Succesfully Changed Email",
+            path: "/settings/changed-email",
+            user: user
+        })
+        user.save();
+    } else {
+        req.flash("error", "Emails do not match!");
+        res.redirect("/settings/email");
+    }
+}
+
+exports.getChangePassword = (req, res) => {
+    res.render("admin/settings/change-password", {
+        pageTitle: "Change Your Email",
+        path: "/settings/email",
+        errorMessage: getErrorMessage(req)
+    });
+}
+
+exports.postChangedPassword = async (req, res) => {
+
+    const {
+        oldPassword,
+        newPassword,
+        confirmNewPassword
+    } = req.body;
+
+
+        const userId = await req.params.userId;
+        const user = await User.findById(userId)
+
+        const oldHashedPassword = await bcrypt.hash(oldPassword, 10);
+        const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+        if (user.password === oldHashedPassword &&
+            newPassword === confirmNewPassword &&
+            oldHashedPassword !== newHashedPassword) {
+                console.log(user);
+            user.password = newHashedPassword;
+            user.save();
+            
+            res.render("admin/settings/appliedSettings/changed-password", {
+                pageTitle: "Succesfully Changed Password",
+                path: "/settings/changed-password",
+                user: user
+            })
+        }
+
+        
+        // console.log(user);
+        // console.log(error);
+        // req.flash("error", "Password do not match!");
+        // res.redirect("/settings/password");
+
+    
 }
