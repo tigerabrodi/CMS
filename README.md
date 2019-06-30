@@ -1,2 +1,2 @@
 # blogcms
-I am making a small blog / cms, in order to learn how to do an auth system aswell as handling routes in the back-end, I also did learn the MVC pattern during this project.
+I am making a CMS / Blog, a plattform for people to share their open-minded thoughts and also their emotions, a place for people who wanna open up to the world and express themselves.
