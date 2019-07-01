@@ -2,3 +2,4 @@ node_modules
 server.cert
 server.key
 nodemon.json
+node.env

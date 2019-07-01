@@ -11,7 +11,12 @@ const postSchema = new Schema({
     context: String,
     author: {
         type: Schema.Types.ObjectId,
-    }
+    },
+    comments: [{
+        context: String,
+        author: String,
+        createdAt: Date
+    }]
 });
 
 
@@ -33,6 +38,13 @@ const userSchema = new Schema({
 
     posts: [postSchema]
 });
+
+const commentSchema = new Schema ({
+    context: {
+        type: String
+    }
+
+})
 
 
 userSchema.pre("save", async function save(next) {

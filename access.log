@@ -6,3 +6,4 @@
 ::1 - - [30/Jun/2019:19:53:36 +0000] "GET /create HTTP/1.1" 200 - "http://localhost:3000/myposts" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
 ::1 - - [30/Jun/2019:19:53:38 +0000] "GET /myposts HTTP/1.1" 304 - "http://localhost:3000/create" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
 ::1 - - [30/Jun/2019:19:53:39 +0000] "GET / HTTP/1.1" 304 - "http://localhost:3000/myposts" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+::1 - - [30/Jun/2019:21:03:48 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
