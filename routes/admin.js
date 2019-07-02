@@ -36,7 +36,9 @@ router.post("/settings/changed-email/:userId", adminController.postChangedEmail)
 
 router.post("/posts/edit-post", adminController.postEditPost);
 
-router.post("/posts", adminController.postCreatePost)
+router.post("/posts", adminController.postCreatePost);
+
+router.post("/posts/:postId", adminController.postCreateComment);
 
 
 

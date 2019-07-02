@@ -3,6 +3,13 @@ const mongoose = require("mongoose"),
     bcrypt = require("bcryptjs");
 
 
+const commentSchema = new Schema({
+    context: String,
+    author: String,
+    postId: {
+        type: Schema.Types.ObjectId
+    }
+})
 
 
 const postSchema = new Schema({
@@ -12,11 +19,7 @@ const postSchema = new Schema({
     author: {
         type: Schema.Types.ObjectId,
     },
-    comments: [{
-        context: String,
-        author: String,
-        createdAt: Date
-    }]
+    comments: [commentSchema]
 });
 
 
@@ -39,12 +42,7 @@ const userSchema = new Schema({
     posts: [postSchema]
 });
 
-const commentSchema = new Schema ({
-    context: {
-        type: String
-    }
 
-})
 
 
 userSchema.pre("save", async function save(next) {
@@ -58,8 +56,10 @@ userSchema.pre("save", async function save(next) {
 
 const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
+const Comment = mongoose.model("Comment", commentSchema)
 
 module.exports = {
     User,
-    Post
+    Post,
+    Comment
 }

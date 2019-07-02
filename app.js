@@ -1,4 +1,6 @@
-require('dotenv').config({path: "./node.env"});
+require('dotenv').config({
+    path: "./node.env"
+});
 const path = require('path');
 const fs = require("fs");
 const express = require('express');
@@ -19,7 +21,8 @@ const app = express();
 const csrf = require("csurf");
 const {
     User,
-    Post
+    Post,
+    Comment
 } = require("./models/model");
 
 // passport config

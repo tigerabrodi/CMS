@@ -13,5 +13,28 @@
         <a href="/posts/deleted-post/<%= post._id %>">Delete Post</a>
         <% } %>
     </main>
+    <div class="create-comment">
+        <form action="/posts/<%=post._id%>" method="POST">
+            <label for="comment">Comment Here</label>
+            <textarea name="context" placeholder="Enter Comment..." cols="30" rows="10"></textarea>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <% if (comments.length > 0) { %>
+    <% for (let comment of comments) { %>
+
+    <div class="comment">
+        <div>
+            <article>
+                <h1><%=comment.author%></h1>
+                <p><%=comment.context%></p>
+            </article>
+        </div>
+    </div>
+
+    <% } %>
+    <% } %>
+
 
     <%- include("../includes/footer.ejs") %>

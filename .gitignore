@@ -3,3 +3,9 @@ server.cert
 server.key
 nodemon.json
 node.env
+.vscode
+.vscode-janus-debug
+access.log
+debug.log
+Procfile
+README.md

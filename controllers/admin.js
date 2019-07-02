@@ -5,6 +5,7 @@ const _ = require("lodash");
 const {
     User,
     Post,
+    Comment,
 } = require("../models/model");
 
 function getErrorMessage(req) {
@@ -18,7 +19,9 @@ function getErrorMessage(req) {
 }
 
 exports.getMyPostsPage = async (req, res) => {
-    const posts = await Post.find({author: req.user._id})
+    const posts = await Post.find({
+        author: req.user._id
+    })
     res.render("admin/myposts", {
         path: "/myposts",
         pageTitle: "My Posts",
@@ -73,6 +76,7 @@ exports.postCreatePost = async (req, res) => {
             path: "/posts",
             posts: posts
         })
+            console.log(post.author);
     } catch (err) {
         console.log(err);
     }
@@ -82,19 +86,16 @@ exports.postCreatePost = async (req, res) => {
 exports.getPost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
-        const user = req.user;
+        const comments = await Comment.find({postId: post._id})
         res.render("admin/post", {
             post: post,
             pageTitle: post.title,
             path: "/posts",
-            user: user
-        })
-        console.log(typeof(user._id));
-        console.log(typeof(post.author));
+            comments: comments
+        });
     } catch (err) {
         console.log(err);
     }
-
 }
 
 exports.getEditPost = async (req, res) => {
@@ -254,4 +255,32 @@ exports.postDeletedAccount = async (req, res) => {
             user: user
         })
     })
+}
+
+exports.postCreateComment = async (req, res) => {
+    const {
+        context
+    } = req.body;
+    try {
+        const post = await Post.findById(req.params.postId);
+
+        const comment = new Comment({
+            context: context,
+            author: req.user.name,
+            postId: post._id,
+        });
+
+        const savedComment = await comment.save();
+        const postsComment = await post.comments.push(comment);
+        
+        const comments = await Comment.find({postId: post._id})
+        res.render("admin/post", {
+            path: "/posts",
+            pageTitle: post.title,
+            comments: comments,
+            post: post
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
