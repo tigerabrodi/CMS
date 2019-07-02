@@ -8,6 +8,9 @@ const commentSchema = new Schema({
     author: String,
     postId: {
         type: Schema.Types.ObjectId
+    },
+    userId: {
+        type: Schema.Types.ObjectId
     }
 })
 

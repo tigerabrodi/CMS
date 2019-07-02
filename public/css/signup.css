@@ -38,3 +38,8 @@ form label {
     display: flex;;
     margin-left: 40%;
 }
+
+form input.invalid,
+form textarea.invalid {
+  border-color: red;
+}

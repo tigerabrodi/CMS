@@ -46,37 +46,40 @@ textarea::placeholder {
 
 .grid {
     display: inline-flex;
-}
-
-.grid div {
-    margin: 0 25px;
-}
-
-.grid .post {
+  }
+  
+  .grid div {
+    margin: 0 30px;
+  }
+  
+  .grid .post {
     border: 4px dashed #207420;
     border-radius: 10px;
     text-align: center;
-    width: 200px;
-    height: 200px;
+    margin-top: 20px;
+    width: 300px;
+    word-wrap: break-word;
+    height: 250px;
     box-shadow: 4px 4px 4px 8px rgba(0, 0, 0, 0.26);
-}
-
-.grid .post h1 {
+  }
+  
+  .grid .post h1 {
     font-family: Arial, Helvetica, sans-serif;
     color: #608658;
-    font-size: 20px;
+    font-size: 18px;
     text-shadow: 2px 2px 4px rgb(0, 0, 0);
-}
-
-.grid .post p {
+    margin: 3px 0;
+  }
+  
+  .grid .post p {
     font-family: Arial, Helvetica, sans-serif;
     color: #417c35;
     margin-top: 50px;
     font-size: 15px;
     text-shadow: 2px 2px 4px rgb(0, 0, 0);
-}
-
-.grid .post a {
+  }
+  
+  .grid .post a {
     display: inline-block;
     border-radius: 3px;
     background: #8bd17d;
@@ -85,8 +88,8 @@ textarea::placeholder {
     font-weight: 700;
     padding: 0 5px;
     text-decoration: none;
-}
-
+  }
+  
 .post-detail {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -265,13 +268,6 @@ textarea::placeholder {
     margin-left: 40%;
 }
 
-
-#context {
-    height: 50px;
-    padding-bottom: 70px;
-}
-
-
 .changed-password {
     text-align: center;
 }
@@ -359,4 +355,66 @@ textarea::placeholder {
 
 .create-comment button {
     margin-right: 40px;
+}
+
+.comment p,
+.comment h1 {
+        display: inline;
+        font-family: 'Open Sans', sans-serif;
+        line-height: 28px;
+        color: #417c35;
+        text-shadow: 2px 2px 4px rgb(0, 0, 0);
+        padding: 0px 200px;
+    }
+
+.comment {
+    padding: 30px;
+}
+
+
+.comment label {
+    margin-left: 205px;
+    color: #8bd37c;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+.comment a:hover {
+    color: rgb(46, 137, 165);
+}
+
+.comment a {
+    color: black;
+    float: right;
+}
+
+.deleted-comment {
+    text-align: center;
+}
+
+.deleted-comment h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 150px;
+    font-size: 50px;
+    text-align: center;
+    color: #417c35;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
+
+#commentLabel {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #8bd37c;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+    text-align: center;
+}
+
+#context {
+    height: 50px;
+    padding-bottom: 70px;
+}
+
+#postAuthor {
+    margin-left: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #8bd37c;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }

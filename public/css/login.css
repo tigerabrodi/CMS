@@ -47,3 +47,9 @@ form {
 form input {
     width: 300px;
 }
+
+
+form input.invalid,
+form textarea.invalid {
+  border-color: red;
+}

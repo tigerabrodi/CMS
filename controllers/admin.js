@@ -8,6 +8,7 @@ const {
     Comment,
 } = require("../models/model");
 
+
 function getErrorMessage(req) {
     let message = req.flash("error");
     if (message.length > 0) {
@@ -76,7 +77,7 @@ exports.postCreatePost = async (req, res) => {
             path: "/posts",
             posts: posts
         })
-            console.log(post.author);
+        console.log(post.author);
     } catch (err) {
         console.log(err);
     }
@@ -86,12 +87,18 @@ exports.postCreatePost = async (req, res) => {
 exports.getPost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
-        const comments = await Comment.find({postId: post._id})
+        const comments = await Comment.find({
+            postId: post._id
+        });
+        const user = await User.findOne({_id: post.author});
+        const users = await User.find()
         res.render("admin/post", {
             post: post,
             pageTitle: post.title,
             path: "/posts",
-            comments: comments
+            comments: comments,
+            user: user,
+            users: users
         });
     } catch (err) {
         console.log(err);
@@ -268,18 +275,48 @@ exports.postCreateComment = async (req, res) => {
             context: context,
             author: req.user.name,
             postId: post._id,
+            userId: req.user._id
         });
 
         const savedComment = await comment.save();
         const postsComment = await post.comments.push(comment);
-        
-        const comments = await Comment.find({postId: post._id})
+
+        const comments = await Comment.find({
+            postId: post._id
+        });
+
+        const users = await User.find()
+
         res.render("admin/post", {
             path: "/posts",
             pageTitle: post.title,
             comments: comments,
-            post: post
+            post: post,
+            users: users
         });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.getDeleteComment = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId);
+
+        const comment = await Comment.findOne({
+            userId: req.user._id,
+            postId: post._id
+        });
+
+        const deletedComment = await comment.delete();
+
+        console.log(deletedComment);
+        console.log(comment);
+        res.render("admin/deleted-comment", {
+            pageTitle: "Deleted Comment",
+            path: "/posts/deleted-comment",
+            post: post
+        })
     } catch (error) {
         console.log(error);
     }

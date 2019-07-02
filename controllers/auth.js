@@ -7,6 +7,10 @@ const {
 const passport = require("passport");
 const _ = require('lodash');
 
+const {
+    validationResult
+} = require("express-validator");
+
 
 function getErrorMessage(req) {
     let message = req.flash("error");
@@ -23,7 +27,12 @@ exports.getLoginPage = (req, res) => {
     res.render("blog/login", {
         pageTitle: "login",
         path: "/login",
-        errorMessage: getErrorMessage(req)
+        errorMessage: getErrorMessage(req),
+        oldInput: {
+            email: "",
+            password: ""
+        },
+        validationErrors: []
     });
 }
 
@@ -32,12 +41,34 @@ exports.getsignUpPage = (req, res) => {
     res.render("blog/signup", {
         pageTitle: "signup",
         path: "/signup",
-        errorMessage: getErrorMessage(req)
+        errorMessage: getErrorMessage(req),
+        oldInput: {
+            email: "",
+            password: "",
+        },
+        validationErrors: []
     });
 }
 
 
 exports.postLogin = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).render('blog/login', {
+            path: '/login',
+            pageTitle: 'Login',
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email: email,
+                password: password
+            },
+            validationErrors: errors.array()
+        });
+    }
+
     passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/login',
@@ -53,18 +84,33 @@ exports.getLogout = (req, res, next) => {
 
 
 exports.postSignup = (req, res, next) => {
-
     const {
         name,
         email,
-        password,
+        password
     } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(422).render('blog/signup', {
+            path: '/signup',
+            pageTitle: 'Signup',
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                name,
+                email,
+                password,
+            },
+            validationErrors: errors.array()
+        });
+    }
 
     const user = new User({
         name,
         email,
         password,
-    });
+    })
 
     User.findOne({
         email

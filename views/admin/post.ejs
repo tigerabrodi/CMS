@@ -1,9 +1,11 @@
 <%- include("../includes/head.ejs") %>
 <link rel="stylesheet" href="/css/admin.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
     <%- include("../includes/navigation.ejs", ) %>
+    <h3 id="postAuthor">Author: <%=user.name%></h3>
     <main class="post-detail">
         <h1><%= post.title %></h1>
         <h2><%= post.description%></h2>
@@ -21,16 +23,20 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <h1 id="commentLabel">Comments</h1>
     <% if (comments.length > 0) { %>
     <% for (let comment of comments) { %>
-
     <div class="comment">
-        <div>
-            <article>
-                <h1><%=comment.author%></h1>
-                <p><%=comment.context%></p>
-            </article>
-        </div>
+        <label for="commentauthor">Author</label>
+        <article>
+            <h1><%=comment.author%></h1>
+            <p><%=comment.context%></p>
+            <% for (let user of users) { %>
+            <%  if (user._id === comment.userId) { %>
+            <a href="/posts/delete-comment/<%=post._id%>"><i class="material-icons">delete</i></a>
+            <% } %>
+            <% } %>
+        </article>
     </div>
 
     <% } %>

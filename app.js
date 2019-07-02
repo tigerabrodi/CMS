@@ -88,6 +88,7 @@ app.use(compression());
 app.use(morgan('combined', {
     stream: accessLogStream
 }));
+app.use(express.json());
 
 // global variables
 app.use((req, res, next) => {

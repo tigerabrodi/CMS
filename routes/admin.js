@@ -28,6 +28,8 @@ router.get("/settings/password", adminController.getChangePassword);
 
 router.get("/settings/delete-account", adminController.getDeleteAccount);
 
+router.get("/posts/delete-comment/:postId", adminController.getDeleteComment);
+
 router.post("/settings/deleted-account/:userId", adminController.postDeletedAccount)
 
 router.post("/settings/changed-password/:userId", adminController.postChangedPassword);
