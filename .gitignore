@@ -8,4 +8,3 @@ node.env
 access.log
 debug.log
 Procfile
-README.md
