@@ -24,7 +24,7 @@
     "csurf": "^1.10.0",
     "dotenv": "^7.0.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-flash-messages": "^0.1.1",
     "express-session": "^1.16.1",
     "express-validator": "^6.1.1",
